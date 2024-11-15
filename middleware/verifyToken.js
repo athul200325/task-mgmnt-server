@@ -1,10 +1,10 @@
 const jwt = require('jsonwebtoken');
 
 const verifyToken = (req, res, next) => {
-  // Get token from Authorization header
+  
   const token = req.header('Authorization')?.replace('Bearer ', '');
 
-  // If there's no token, return 401 Unauthorized
+  
   if (!token) {
     return res.status(401).json({ message: 'Access denied. No token provided.' });
   }
@@ -16,8 +16,8 @@ const verifyToken = (req, res, next) => {
 
     next();
   } catch (error) {
-    // Invalid token
-    console.error('Token verification failed:', error);  // Optional log for dev purposes
+    
+    console.error('Token verification failed:', error);  
     return res.status(401).json({ message: 'Invalid or expired token.' });
   }
 };

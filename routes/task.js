@@ -2,10 +2,10 @@ const express = require('express');
 const Task = require('../models/taskModel');
 const router = express.Router();
 
-// Middleware to verify token (for protected routes)
+
 const verifyToken = require('../middleware/verifyToken');
 
-// Get all tasks (protected route)
+
 router.get('/', verifyToken, async (req, res) => {
   try {
     const tasks = await Task.find();
@@ -16,7 +16,7 @@ router.get('/', verifyToken, async (req, res) => {
   }
 });
 
-// Get a single task by its ID (protected route)
+
 router.get('/:id', verifyToken, async (req, res) => {
   const { id } = req.params;
 
@@ -34,11 +34,11 @@ router.get('/:id', verifyToken, async (req, res) => {
   }
 });
 
-// Add a new task (protected route)
+
 router.post('/', verifyToken, async (req, res) => {
   const { title, description, startDate, endDate, status, progress } = req.body;
 
-  // Validate required fields
+  
   if (!title || !description || !startDate || !endDate || !status || progress === undefined) {
     return res.status(400).json({ message: 'All fields are required.' });
   }
@@ -61,12 +61,12 @@ router.post('/', verifyToken, async (req, res) => {
   }
 });
 
-// Edit a task (protected route)
+
 router.put('/:id', verifyToken, async (req, res) => {
   const { id } = req.params;
   const { title, description, startDate, endDate, status, progress } = req.body;
 
-  // Validate required fields
+  
   if (!title || !description || !startDate || !endDate || !status || progress === undefined) {
     return res.status(400).json({ message: 'All fields are required.' });
   }
@@ -75,7 +75,7 @@ router.put('/:id', verifyToken, async (req, res) => {
     const updatedTask = await Task.findByIdAndUpdate(
       id,
       { title, description, startDate, endDate, status, progress },
-      { new: true } // Return the updated task
+      { new: true } 
     );
 
     if (!updatedTask) {
@@ -89,7 +89,7 @@ router.put('/:id', verifyToken, async (req, res) => {
   }
 });
 
-// Delete a task (protected route)
+
 router.delete('/:id', verifyToken, async (req, res) => {
   const { id } = req.params;
 
